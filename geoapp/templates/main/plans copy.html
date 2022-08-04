@@ -1,0 +1,56 @@
+{% extends 'components/base.html' %}
+
+{% block content%}
+
+
+<div>
+    <div class="container" style="height: 100vh; width: 100%;">
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Sl. No .</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Plan Date</th>
+                    <th scope="col">Approved Date</th>
+                    <th scope="col">Approving Authority</th>
+                    <th scope="col">Period</th>
+                    <th scope="col">Area</th>
+                    <th scope="col">Report</th>
+                    <th scope="col">DCR</th>
+                    <th scope="col">Data History</th>
+                    <th scope="col">View</th>
+                </tr>
+            </thead>
+            {% for i in plans %}
+            <tbody>
+                <tr>
+                    <th scope="row">{{i.id}}</th>
+                    <td>{{i.name}}</td>
+                    <td>{{i.description | safe}}</td>
+                    <td>{{i.plan_date}}</td>
+                    <td>{{i.approved_date}}</td>
+                    <td>{{i.approved_by}}</td>
+                    <td>{{i.period_from}}-{{i.period_till}}</td>
+                    <td>{{i.area}}</td>
+                    <td><a href="{{i.report.url}}"  download="{{i.report.url}}" class="btn btn-outline-primary" target="_blank">Download</a></td>
+                    <td><a href="{{i.dcr.url}}"  download="{{i.dcr.url}}" class="btn btn-outline-primary" target="_blank">Download</a></td>
+                    <td><a href="{% url 'plan_history' i.id %}" class="btn btn-outline-success" >View Histroy</a></td>
+                    <td><a href="{% url 'plan' i.id %}" class="btn btn-outline-success" >View</a></td>
+                </tr>
+            </tbody>
+            {% endfor %}
+        </table>
+
+    </div>
+
+
+
+
+</div>
+
+
+
+
+{% endblock %}

@@ -3,7 +3,7 @@
 {% block content%}
 
 
-<div class="col-md-12">
+<div style="height: 100vh;">
 
 
     <div class="container">
@@ -16,7 +16,7 @@
                     <th scope="col">Boundary</th>
                     <th scope="col">Precient</th>
                     <th scope="col">Plot</th>
-                    <th scope="col">View</th>
+                    <th scope="col">Excel</th>
                 </tr>
             </thead>
             {% for i in plans %}
@@ -27,7 +27,8 @@
                     <td><a href="{{i.boundary.url}}"  download="{{i.boundary.url}}" class="btn btn-outline-primary" target="_blank">Download</a></td>
                     <td><a href="{{i.precient.url}}"  download="{{i.precient.url}}" class="btn btn-outline-primary" target="_blank">Download</a></td>
                     <td><a href="{{i.plot.url}}"  download="{{i.plot.url}}" class="btn btn-outline-primary" target="_blank">Download</a></td>
-                    <td><a href="{% url 'plan' i.id %}" class="btn btn-outline-success" >View</a></td>
+                    <td><a href="{{i.excel.url}}"  download="{{i.excel.url}}" class="btn btn-outline-primary" target="_blank">Download</a></td>
+                    
                 </tr>
             </tbody>
             {% endfor %}

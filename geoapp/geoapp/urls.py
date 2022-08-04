@@ -69,7 +69,6 @@ def boundary(request):
 
     cursor = connection.cursor()
     planTableName = request.session['planTableName']
-    print(planTableName)
     data_query = query(table=planTableName)
 
     cursor.execute(data_query)
@@ -217,7 +216,8 @@ urlpatterns = [
 
     # Plans Url
     path('plans/<int:dzoId>', views.plansByDzongkhag, name='plans'),
-    path('plan/<int:id>', views.planById, name='plan'),
+    path('plan/history/<int:id>', views.plansById, name='plan_history'),
+     path('plan/<int:id>', views.planById, name='plan'),
   
 
     # Plans Download Url

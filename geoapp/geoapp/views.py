@@ -13,13 +13,19 @@ def INDEX(request):
 
 def plansByDzongkhag(request, dzoId):
     plans = plan.objects.all().filter(dzongkhag = dzoId)
-    lastest_plan = plan.objects.filter(dzongkhag = dzoId).last()
-    request.session['planTableName'] = lastest_plan.name
     context = {
         'plans': plans
     }
+    return   render(request,'main/plans.html', context)
 
-    return   render(request,'main/plan_list.html', context)
+def plansById(request, id):
+    plans = data.objects.all().filter(plan_id = id)
+    latest_plan = plans.last()
+    request.session['planTableName'] = latest_plan.database
+    context ={
+        'plans': plans
+    }
+    return render(request,'main/plan_list.html', context)
 
 def planById(request, id):
     request.session['planId'] = id

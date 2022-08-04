@@ -6,3 +6,4 @@ from .models import *
 
 admin.site.register(dzongkhag)
 admin.site.register(plan)
+admin.site.register(data)
