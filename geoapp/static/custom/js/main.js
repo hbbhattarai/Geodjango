@@ -22,7 +22,6 @@ $.getJSON("http://127.0.0.1:8000/dzongkhags", function (data) {
             return {
                 color: "#E2DFD2",
                 fillColor: feature.properties.color,
-                opacity: 2,
             };
         },
         onEachFeature(feature, layer) {
