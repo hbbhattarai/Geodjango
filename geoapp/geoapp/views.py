@@ -20,14 +20,14 @@ def plansByDzongkhag(request, dzoId):
 
 def plansById(request, id):
     plans = data.objects.all().filter(plan_id = id)
-    latest_plan = plans.last()
-    request.session['planTableName'] = latest_plan.database
     context ={
         'plans': plans
     }
     return render(request,'main/plan_list.html', context)
 
 def planById(request, id):
+    single_plan = plan.objects.all().filter(id= id).last()
+    request.session['planTableName'] = single_plan.table
     request.session['planId'] = id
     return render(request,'main/single_plan.html')
 

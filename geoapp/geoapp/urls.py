@@ -217,7 +217,7 @@ urlpatterns = [
     # Plans Url
     path('plans/<int:dzoId>', views.plansByDzongkhag, name='plans'),
     path('plan/history/<int:id>', views.plansById, name='plan_history'),
-     path('plan/<int:id>', views.planById, name='plan'),
+    path('plan/<int:id>', views.planById, name='plan'),
   
 
     # Plans Download Url
