@@ -194,7 +194,7 @@ def dzongkhagById(request,dzoId):
 
 
 urlpatterns = [
-    path('admin', admin.site.urls),
+    path('admin/', admin.site.urls),
     path('base', views.BASE, name='base'),
     path('', views.INDEX, name='index'),
 

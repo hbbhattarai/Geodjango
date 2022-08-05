@@ -99,6 +99,7 @@ class plan(models.Model):
     )
 
     name = models.CharField(max_length=100,blank=True)
+    table = models.CharField(max_length=100,blank=True)
     image = models.FileField(upload_to='static/data/plan/cover', blank=True)
     dzongkhag = models.BigIntegerField(choices=DZONGKHAGS,blank=True)
     area = models.CharField(max_length=100,blank=True)
@@ -117,8 +118,8 @@ class plan(models.Model):
 
 class data(models.Model):
 
-    database = models.CharField(max_length=100,blank=True)
     plan = models.ForeignKey(plan,on_delete=models.CASCADE,blank=True)
+    database = models.CharField(max_length=200,blank=True)
     boundary = models.FileField(upload_to='static/data/plan/boundary/%Y/%m/%d', blank=True)
     precient = models.FileField(upload_to='static/data/plan/precient/%Y/%m/%d', blank=True)
     plot = models.FileField(upload_to='static/data/plan/plot/%Y/%m/%d', blank=True)
@@ -127,6 +128,11 @@ class data(models.Model):
 
     def __str__(self):
         return self.database
+    
+    def save(self, *args, **kwargs):
+        plan_d = plan.objects.all().filter(id=self.plan.id).last()
+        self.database = plan_d.table
+        super(data, self).save(*args, **kwargs)
 
 @receiver(post_save,sender=data)
 
