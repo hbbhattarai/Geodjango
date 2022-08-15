@@ -38,15 +38,13 @@ $.getJSON(`http://127.0.0.1:8000/dzongkhag/${dzoId}`, function (data) {
     var dzongkahg = L.geoJSON(data, {
         style: function (feature) {
             return {
-                color: "#FFFF00",
-                fillColor: feature.properties.color,
+                color: "#FFF",
                 opacity: 2,
             };
         },
         onEachFeature(feature, layer) {
         }
     });
-    controlLayers.addOverlay(dzongkahg, 'Dzongkahgs');
 
 });
 
@@ -55,15 +53,15 @@ $.getJSON(`http://127.0.0.1:8000/boundary`, function (data) {
         style: function (feature) {
             return {
                 color: "#0C0A09",
-                fillColor: "#FCF8F7",
-                opacity: 2,
+                fillColor: "#FFF",
+                opacity: 0.7,
             };
         },
         onEachFeature(feature, layer) {
             var layerBoundray = layer.getBounds()
             map.fitBounds(layerBoundray)
         }
-    }).addTo(map);
+    })
     controlLayers.addOverlay(boundray, 'Boundray');
 
 });
@@ -77,11 +75,66 @@ $.getJSON(`http://127.0.0.1:8000/precient`, function (data) {
             };
         },
         onEachFeature(feature, layer) {
-            
-            layer.bindTooltip(feature.properties.precinct, { permanent: false, opacity: 0.7 ,direction: 'center' });
+
+            layer.bindTooltip(feature.properties.precinct, { permanent: false, opacity: 0.7, direction: 'center' });
+            var popup = L.popup()
+                    .setContent(` 
+                    
+                    <strong> Name: </strong> ${feature.properties.precinct}  
+
+                    <br />
+                    
+                    <strong> Area: </strong> ${feature.properties.area} Acres
+
+                    <br />
+
+                    <strong> Description: </strong> ${feature.properties.details}
+                    ` )
+                    .openOn(layer);
+
+            layer.bindPopup(popup).openPopup();
+            layer.on({
+                'click': function (e) {
+                    highlight(e.target);
+                    select(e.target);
+                }
+            });
+
 
         }
-    }).addTo(map);
+
+        
+    });
+    function highlight(layer) {
+        layer.setStyle({
+            weight: 2,
+            color: "#0C0A09",
+            fillColor: "#FF5733",
+            opacity: 0.6,
+        });
+        if (!L.Browser.ie && !L.Browser.opera) {
+            layer.bringToFront();
+        }
+    }
+
+    function dehighlight(layer) {
+        if (selected === null || selected._leaflet_id !== layer._leaflet_id) {
+            precient.resetStyle(layer);
+        }
+    }
+
+    function select(layer) {
+        if (selected !== null) {
+            var previous = selected;
+        }
+        map.fitBounds(layer.getBounds());
+        selected = layer;
+        if (previous) {
+            dehighlight(previous);
+        }
+    }
+    
+    precient.addTo(map);
     controlLayers.addOverlay(precient, 'Precient');
 
 });
@@ -96,8 +149,9 @@ $.getJSON(`http://127.0.0.1:8000/plot`, function (data) {
             };
         },
         onEachFeature(feature, layer) {
-            layer.bindTooltip(feature.properties.plot_id, { permanent: false, opacity: 0.7 ,direction: 'center' });
+            layer.bindTooltip(feature.properties.plot_id, { permanent: false, opacity: 0.7, direction: 'center' });
         }
+
     });
     controlLayers.addOverlay(plot, 'Plot');
 
