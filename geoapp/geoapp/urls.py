@@ -109,6 +109,40 @@ def precient(request):
     return HttpResponse(response,content_type='json')
 
 
+
+def getAllPrcientInDzongkhag(request, dzoId):
+    plans = plan.objects.all().filter(dzongkhag = dzoId)
+    precientTables =[]
+    response_data = []
+
+    for i in plans:
+        DB_CONNECT = settings.DATABASES["default"]
+
+        connection = psycopg2.connect(
+            database=DB_CONNECT["NAME"],
+            user=DB_CONNECT["USER"],
+            password=DB_CONNECT["PASSWORD"],
+            host=DB_CONNECT["HOST"],
+            port=DB_CONNECT["PORT"],
+        )
+
+        cursor = connection.cursor()
+        
+        precientTable = i.table + "_" + "precient"
+
+        precientTables.append(precientTable)
+    
+    for i in precientTables:
+        data_query = query(table=i)
+        cursor.execute(data_query)
+        
+        result = cursor.fetchall()
+        response = json.dumps(result[0], indent=2)
+        response_data.append(response)
+        
+    return HttpResponse(response_data,content_type='json')
+
+
 def plot(request):
     """
     Fetch Plans data by dzongkhag from PostGIS in GeoJSON and return it in the response.
@@ -197,6 +231,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('base', views.BASE, name='base'),
     path('', views.INDEX, name='index'),
+
+    # Plans Data by Dzongkhag
+    # Dzongkhag Data Url
+    path('plandata/<int:dzoId>',getAllPrcientInDzongkhag,name='dzongkhag_dataplan'),
 
 
     # Dzongkhag Data Url

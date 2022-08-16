@@ -68,17 +68,12 @@ $.getJSON(`http://127.0.0.1:8000/precient`, function (data) {
                     .setContent(` 
                     
                     <strong> Name: </strong> ${feature.properties.precinct}  
-
                     <br />
                     
                     <strong> Area: </strong> ${feature.properties.area} Acres
-
                     <br />
-
                     <strong> Definition: </strong> ${feature.properties.definition}
-
                     <br />
-
                     <strong> Permissible Uses: </strong>  <br />
                     
                     1. ${feature.properties.use1}
@@ -98,32 +93,25 @@ $.getJSON(`http://127.0.0.1:8000/precient`, function (data) {
                     <br />
                     
                     5. ${feature.properties.use5}
-
                     <br />
                     <br />
-
                     <strong> F.A.R: </strong>   ${feature.properties.FAR}
                     
                     <br />
-
                     <strong> Maximum Height: </strong>   ${feature.properties.height}
                     
                     <br />
-
                     <strong> Minimum Plot Size: </strong>   ${feature.properties.plot_size}
                     
                     <br />
-
                     <strong> Maximum Coverage: </strong>   ${feature.properties.coverage}
                     
                     <br />
                     <strong> Minimum Set Backs: </strong>   ${feature.properties.set_back}
-
                     <br />
                     <strong> Small Plot Notes: </strong>   ${feature.properties.notes}
                     
                     <br />
-
                     ` )
                     .openOn(layer);
 
@@ -191,5 +179,3 @@ $.getJSON(`http://127.0.0.1:8000/plot`, function (data) {
     controlLayers.addOverlay(plot, 'Plot');
 
 });
-
-
