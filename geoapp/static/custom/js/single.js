@@ -55,7 +55,7 @@ $.getJSON(`http://127.0.0.1:8000/precient`, function (data) {
     var precient = L.geoJSON(data, {
         style: function (feature) {
             return {
-                width: 0.1,
+                width: 1,
                 color: feature.properties.color,
                 fillColor: feature.properties.color,
                 
@@ -75,7 +75,55 @@ $.getJSON(`http://127.0.0.1:8000/precient`, function (data) {
 
                     <br />
 
-                    <strong> Description: </strong> ${feature.properties.details}
+                    <strong> Definition: </strong> ${feature.properties.definition}
+
+                    <br />
+
+                    <strong> Permissible Uses: </strong>  <br />
+                    
+                    1. ${feature.properties.use1}
+                    <br />
+                    <br />
+                    
+                    2. ${feature.properties.use2}
+                    <br />
+                    <br />
+                    
+                    3. ${feature.properties.use3}
+                    <br />
+                    <br />
+                    
+                    4. ${feature.properties.use4}
+                    <br />
+                    <br />
+                    
+                    5. ${feature.properties.use5}
+
+                    <br />
+                    <br />
+
+                    <strong> F.A.R: </strong>   ${feature.properties.FAR}
+                    
+                    <br />
+
+                    <strong> Maximum Height: </strong>   ${feature.properties.height}
+                    
+                    <br />
+
+                    <strong> Minimum Plot Size: </strong>   ${feature.properties.plot_size}
+                    
+                    <br />
+
+                    <strong> Maximum Coverage: </strong>   ${feature.properties.coverage}
+                    
+                    <br />
+                    <strong> Minimum Set Backs: </strong>   ${feature.properties.set_back}
+
+                    <br />
+                    <strong> Small Plot Notes: </strong>   ${feature.properties.notes}
+                    
+                    <br />
+
                     ` )
                     .openOn(layer);
 
@@ -94,10 +142,10 @@ $.getJSON(`http://127.0.0.1:8000/precient`, function (data) {
     });
     function highlight(layer) {
         layer.setStyle({
-            weight: 1,
-            color: "#0C0A09",
+            weight: 2,
+            color: "#FF5733",
             fillColor: "#FF5733",
-            opacity: 0.6,
+            opacity: 1,
         });
         if (!L.Browser.ie && !L.Browser.opera) {
             layer.bringToFront();
