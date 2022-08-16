@@ -13,14 +13,13 @@ var dzoId = sessionStorage.getItem('dzongkhagId');
 
 
 // adding osm tilelayer 
-var Carto = L.tileLayer('https://cartodb-basemaps-a.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png').addTo(map);
-
-var Imagery = L.tileLayer('http://mt0.google.com/vt/lyrs=s&hl=en&x={x}&y={y}&z={z}');
+var Imagery = L.tileLayer('http://mt0.google.com/vt/lyrs=s&hl=en&x={x}&y={y}&z={z}').addTo(map);
+var Carto = L.tileLayer('https://cartodb-basemaps-a.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png');
 var Hybrid = L.tileLayer('http://mt0.google.com/vt/lyrs=y&hl=en&x={x}&y={y}&z={z}');
 
 var BaseLayers = {
-    'Carto Map': Carto,
     'Satellite Imagery': Imagery,
+    'Carto Map': Carto,
     'Hybrid Imagery': Hybrid,
 }
 
@@ -32,20 +31,6 @@ L.control.scale().addTo(map);
 //Map coordinate display
 map.on('mousemove', function (e) {
     $('.coordinate').html(`Lat: ${e.latlng.lat} Lng: ${e.latlng.lng}`)
-});
-
-$.getJSON(`http://127.0.0.1:8000/dzongkhag/${dzoId}`, function (data) {
-    var dzongkahg = L.geoJSON(data, {
-        style: function (feature) {
-            return {
-                color: "#FFF",
-                opacity: 2,
-            };
-        },
-        onEachFeature(feature, layer) {
-        }
-    });
-
 });
 
 $.getJSON(`http://127.0.0.1:8000/boundary`, function (data) {
@@ -70,8 +55,10 @@ $.getJSON(`http://127.0.0.1:8000/precient`, function (data) {
     var precient = L.geoJSON(data, {
         style: function (feature) {
             return {
+                width: 0.1,
                 color: feature.properties.color,
                 fillColor: feature.properties.color,
+                
             };
         },
         onEachFeature(feature, layer) {
@@ -107,7 +94,7 @@ $.getJSON(`http://127.0.0.1:8000/precient`, function (data) {
     });
     function highlight(layer) {
         layer.setStyle({
-            weight: 2,
+            weight: 1,
             color: "#0C0A09",
             fillColor: "#FF5733",
             opacity: 0.6,

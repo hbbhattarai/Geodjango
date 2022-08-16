@@ -12,7 +12,7 @@
             <thead>
                 <tr>
                     <th scope="col">Sl. No .</th>
-                    <th scope="col"> Date </th>
+                    <th scope="col">Name (Date) </th>
                     <th scope="col">Boundary</th>
                     <th scope="col">Precient</th>
                     <th scope="col">Plot</th>
@@ -23,7 +23,7 @@
             <tbody>
                 <tr>
                     <th scope="row">{{i.id}}</th>
-                    <td>{{i.created_at}}</td>
+                    <td>{{i.plan.name}} ({{i.created_at}} )</td>
                     <td><a href="{{i.boundary.url}}"  download="{{i.boundary.url}}" class="btn btn-outline-primary" target="_blank">Download</a></td>
                     <td><a href="{{i.precient.url}}"  download="{{i.precient.url}}" class="btn btn-outline-primary" target="_blank">Download</a></td>
                     <td><a href="{{i.plot.url}}"  download="{{i.plot.url}}" class="btn btn-outline-primary" target="_blank">Download</a></td>
