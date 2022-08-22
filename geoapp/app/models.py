@@ -122,7 +122,7 @@ class data(models.Model):
     database = models.CharField(max_length=200,blank=True)
     boundary = models.FileField(upload_to='static/data/plan/boundary/%Y/%m/%d', blank=True)
     precient = models.FileField(upload_to='static/data/plan/precient/%Y/%m/%d', blank=True)
-    plot = models.FileField(upload_to='static/data/plan/plot/%Y/%m/%d', blank=True)
+    # plot = models.FileField(upload_to='static/data/plan/plot/%Y/%m/%d', blank=True)
     excel = models.FileField(upload_to='static/data/plan/excel', blank=True)
     created_at = models.DateField(default=datetime.date.today, blank=True)
 
@@ -207,38 +207,38 @@ def pusblish_plan_precient(sender, instance, created, **kwargs):
         print("There is problem during shp upload: ", e)
 
 
-@receiver(post_save,sender=data)
-def pusblish_plan_plot(sender, instance, created, **kwargs):
-    file = instance.plot.path
-    file_format = os.path.basename(file).split('.')[-1]
-    file_name = os.path.basename(file).split('.')[0]
-    file_path = os.path.dirname(file)
-    name = instance.database.lower() + "_" + "plot"
-    conn_str = 'postgresql://postgres:kali339456@localhost:5432/geo'
+# @receiver(post_save,sender=data)
+# def pusblish_plan_plot(sender, instance, created, **kwargs):
+#     file = instance.plot.path
+#     file_format = os.path.basename(file).split('.')[-1]
+#     file_name = os.path.basename(file).split('.')[0]
+#     file_path = os.path.dirname(file)
+#     name = instance.database.lower() + "_" + "plot"
+#     conn_str = 'postgresql://postgres:kali339456@localhost:5432/geo'
 
-    # extract zipfile
-    with zipfile.ZipFile(file, 'r') as zip_ref:
-        zip_ref.extractall(file_path)
+#     # extract zipfile
+#     with zipfile.ZipFile(file, 'r') as zip_ref:
+#         zip_ref.extractall(file_path)
 
-   # Get shapefile
-    shp = glob.glob(r'{}/**/*.shp'.format(file_path),recursive=True)
+#    # Get shapefile
+#     shp = glob.glob(r'{}/**/*.shp'.format(file_path),recursive=True)
 
-    try:
-        req_shp = shp[0]
-        gdf = gpd.read_file(req_shp)  # make geodataframe
-        engine = create_engine(conn_str)
-        gdf.to_postgis(
-            con=engine,
-            schema='public',
-            name= name,
-            if_exists="replace")
+#     try:
+#         req_shp = shp[0]
+#         gdf = gpd.read_file(req_shp)  # make geodataframe
+#         engine = create_engine(conn_str)
+#         gdf.to_postgis(
+#             con=engine,
+#             schema='public',
+#             name= name,
+#             if_exists="replace")
 
-        for s in shp:
-            os.remove(s)
+#         for s in shp:
+#             os.remove(s)
 
-    except Exception as e:
-        for s in shp:
-            os.remove(s)
-        instance.delete()
-        print("There is problem during shp upload: ", e)
+#     except Exception as e:
+#         for s in shp:
+#             os.remove(s)
+#         instance.delete()
+#         print("There is problem during shp upload: ", e)
 

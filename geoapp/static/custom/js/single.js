@@ -162,20 +162,20 @@ $.getJSON(`http://127.0.0.1:8000/precient`, function (data) {
 
 });
 
-$.getJSON(`http://127.0.0.1:8000/plot`, function (data) {
-    var plot = L.geoJSON(data, {
-        style: function (feature) {
-            return {
-                color: "#7F968C",
-                fillColor: "#7F968C",
-                width: 0.2,
-            };
-        },
-        onEachFeature(feature, layer) {
-            layer.bindTooltip(feature.properties.plot_id, { permanent: false, opacity: 0.7, direction: 'center' });
-        }
+// $.getJSON(`http://127.0.0.1:8000/plot`, function (data) {
+//     var plot = L.geoJSON(data, {
+//         style: function (feature) {
+//             return {
+//                 color: "#7F968C",
+//                 fillColor: "#7F968C",
+//                 width: 0.2,
+//             };
+//         },
+//         onEachFeature(feature, layer) {
+//             layer.bindTooltip(feature.properties.plot_id, { permanent: false, opacity: 0.7, direction: 'center' });
+//         }
 
-    });
-    controlLayers.addOverlay(plot, 'Plot');
+//     });
+//     controlLayers.addOverlay(plot, 'Plot');
 
-});
+// });
