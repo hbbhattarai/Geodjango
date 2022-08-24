@@ -25,6 +25,8 @@ class dzongkhag(models.Model):
 
     def __str__(self):
         return self.name
+    class Meta:
+        verbose_name_plural = "1. Dzongkhag Boundary"
 
 
 @receiver(post_save,sender=dzongkhag)
@@ -34,7 +36,7 @@ def pusblish_boundary(sender, instance, created, **kwargs):
     file_name = os.path.basename(file).split('.')[0]
     file_path = os.path.dirname(file)
     name = instance.name.lower()
-    conn_str = 'postgresql://postgres:kali339456@localhost:5432/geo'
+    conn_str = 'postgresql://postgres:kali339456@localhost:5432/inventory'
 
     # extract zipfile
     with zipfile.ZipFile(file, 'r') as zip_ref:
@@ -61,13 +63,6 @@ def pusblish_boundary(sender, instance, created, **kwargs):
             os.remove(s)
         instance.delete()
         print("There is problem during shp upload: ", e)
-
-class list(models.Model):
-    name = models.CharField(max_length=100,blank=True)
-
-    def __str__(self):
-        return self.name
-
 
 class plan(models.Model):
     DZONGKHAGS = (
@@ -104,9 +99,10 @@ class plan(models.Model):
         ('NCHS','NCHS'),
         ('NCCHS','NCCHS'),
         ('LG','LG'),
+
     )
 
-    name = models.ForeignKey(list,on_delete=models.CASCADE,blank=True)
+    name = models.CharField(max_length=100,blank=True)
     table = models.CharField(max_length=100,blank=True)
     image = models.FileField(upload_to='static/data/plan/cover', blank=True)
     dzongkhag = models.BigIntegerField(choices=DZONGKHAGS,blank=True)
@@ -123,6 +119,9 @@ class plan(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name_plural = "2. Plans Detail"
 
 class data(models.Model):
 
@@ -142,6 +141,9 @@ class data(models.Model):
         self.database = plan_d.table
         super(data, self).save(*args, **kwargs)
 
+    class Meta:
+        verbose_name_plural = "3. Plans Data"
+
 @receiver(post_save,sender=data)
 
 def pusblish_plan_boundary(sender, instance, created, **kwargs):
@@ -150,7 +152,7 @@ def pusblish_plan_boundary(sender, instance, created, **kwargs):
     file_name = os.path.basename(file).split('.')[0]
     file_path = os.path.dirname(file)
     name = instance.database.lower()
-    conn_str = 'postgresql://postgres:kali339456@localhost:5432/geo'
+    conn_str = 'postgresql://postgres:kali339456@localhost:5432/inventory'
 
     # extract zipfile
     with zipfile.ZipFile(file, 'r') as zip_ref:
@@ -186,7 +188,7 @@ def pusblish_plan_precient(sender, instance, created, **kwargs):
     file_name = os.path.basename(file).split('.')[0]
     file_path = os.path.dirname(file)
     name = instance.database.lower() + "_" + "precient"
-    conn_str = 'postgresql://postgres:kali339456@localhost:5432/geo'
+    conn_str = 'postgresql://postgres:kali339456@localhost:5432/inventory'
 
     # extract zipfile
     with zipfile.ZipFile(file, 'r') as zip_ref:
