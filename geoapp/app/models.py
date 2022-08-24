@@ -62,6 +62,13 @@ def pusblish_boundary(sender, instance, created, **kwargs):
         instance.delete()
         print("There is problem during shp upload: ", e)
 
+class list(models.Model):
+    name = models.CharField(max_length=100,blank=True)
+
+    def __str__(self):
+        return self.name
+
+
 class plan(models.Model):
     DZONGKHAGS = (
         (1, 'Bumthang'),
@@ -96,9 +103,10 @@ class plan(models.Model):
         ('PPCM','PPCM'),
         ('NCHS','NCHS'),
         ('NCCHS','NCCHS'),
+        ('LG','LG'),
     )
 
-    name = models.CharField(max_length=100,blank=True)
+    name = models.ForeignKey(list,on_delete=models.CASCADE,blank=True)
     table = models.CharField(max_length=100,blank=True)
     image = models.FileField(upload_to='static/data/plan/cover', blank=True)
     dzongkhag = models.BigIntegerField(choices=DZONGKHAGS,blank=True)
