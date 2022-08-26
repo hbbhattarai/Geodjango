@@ -98,6 +98,7 @@ class plan(models.Model):
         ('PPCM','PPCM'),
         ('NCHS','NCHS'),
         ('NCCHS','NCCHS'),
+        ('UNKNOWN','UNKNOWN'),
         ('LG','LG'),
 
     )
