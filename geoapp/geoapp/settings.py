@@ -90,10 +90,10 @@ WSGI_APPLICATION = 'geoapp.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE':'django.contrib.gis.db.backends.postgis',
-        'NAME': 'inventory',
-        'USER': 'postgres',
-        'PASSWORD':'kali339456',
-        'HOST':'localhost',
+        'NAME': 'web_pi',
+        'USER': 'root',
+        'PASSWORD':'323395kt',
+        'HOST':'192.168.20.87',
         'PORT':'5432',
     }
 }

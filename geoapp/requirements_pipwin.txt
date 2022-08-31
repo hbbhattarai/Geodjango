@@ -1,0 +1,8 @@
+Fiona
+GDAL
+numpy
+pandas
+pyproj
+rasterio
+Shapely
+Rtree

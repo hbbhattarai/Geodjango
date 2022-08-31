@@ -73,6 +73,9 @@
         </div>
         <div class="blog-details">
             <h4>{{i.name}} {{i.id}}</h4>
+            <a href="#">Approved Date: {{i.approved_date}}</a>
+            <br />
+            <a href="#">Implementation Period: {{i.period_from}} -  {{i.period_till}}</a>
             <p>{{i.description | safe}}</p>
             <a href="{{i.report.url}}" download="{{i.report.url}}" class="btn btn-outline-primary"
                 target="_blank">Download Report</a>
@@ -81,6 +84,7 @@
             <a href="{% url 'plan_history' i.id %}" class="btn btn-outline-primary">View Histroy</a>
             <a href="{% url 'plan' i.id %}" class="btn btn-outline-success">View Spatailly</a>
         </div>
+        
     </div>
     {% endfor %}
 </section>

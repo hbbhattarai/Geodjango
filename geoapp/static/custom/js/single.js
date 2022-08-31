@@ -13,8 +13,8 @@ var dzoId = sessionStorage.getItem('dzongkhagId');
 
 
 // adding osm tilelayer 
-var Imagery = L.tileLayer('http://mt0.google.com/vt/lyrs=s&hl=en&x={x}&y={y}&z={z}').addTo(map);
-var Carto = L.tileLayer('https://cartodb-basemaps-a.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png');
+var Imagery = L.tileLayer('http://mt0.google.com/vt/lyrs=s&hl=en&x={x}&y={y}&z={z}')
+var Carto = L.tileLayer('https://cartodb-basemaps-a.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png').addTo(map);
 var Hybrid = L.tileLayer('http://mt0.google.com/vt/lyrs=y&hl=en&x={x}&y={y}&z={z}');
 
 var BaseLayers = {
@@ -37,9 +37,9 @@ $.getJSON(`http://127.0.0.1:8000/boundary`, function (data) {
     var boundray = L.geoJSON(data, {
         style: function (feature) {
             return {
-                color: "#0C0A09",
+                color: "#ff0000",
                 fillColor: "#FFF",
-                opacity: 0.7,
+                fillOpacity:0,
             };
         },
         onEachFeature(feature, layer) {
@@ -55,9 +55,11 @@ $.getJSON(`http://127.0.0.1:8000/precient`, function (data) {
     var precient = L.geoJSON(data, {
         style: function (feature) {
             return {
-                width: 1,
                 color: feature.properties.color,
                 fillColor: feature.properties.color,
+                fillOpacity:0.5,
+                width:0.1,
+                opacity:0.5
                 
             };
         },
@@ -67,7 +69,7 @@ $.getJSON(`http://127.0.0.1:8000/precient`, function (data) {
             var popup = L.popup()
                     .setContent(` 
                     
-                    <strong> Name: </strong> ${feature.properties.precinct}  
+                    <strong> Name: </strong> ${feature.properties.name}  
                     <br />
                     
                     <strong> Area: </strong> ${feature.properties.area} Acres

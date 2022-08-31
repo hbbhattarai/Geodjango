@@ -36,7 +36,7 @@ def pusblish_boundary(sender, instance, created, **kwargs):
     file_name = os.path.basename(file).split('.')[0]
     file_path = os.path.dirname(file)
     name = instance.name.lower()
-    conn_str = 'postgresql://postgres:kali339456@localhost:5432/inventory'
+    conn_str = 'postgresql://root:323395kt@192.168.20.87:5432/web_pi'
 
     # extract zipfile
     with zipfile.ZipFile(file, 'r') as zip_ref:
@@ -125,11 +125,21 @@ class plan(models.Model):
         verbose_name_plural = "2. Plans Detail"
 
 class data(models.Model):
+    APPROVING =(
+        ('PPCM','PPCM'),
+        ('NCHS','NCHS'),
+        ('NCCHS','NCCHS'),
+        ('LG','LG'),
+        ('UNKNOWN','UNKNOWN'),
+
+    )
 
     plan = models.ForeignKey(plan,on_delete=models.CASCADE,blank=True)
     database = models.CharField(max_length=200,blank=True)
     boundary = models.FileField(upload_to='static/data/plan/boundary/%Y/%m/%d', blank=True)
     precient = models.FileField(upload_to='static/data/plan/precient/%Y/%m/%d', blank=True)
+    drawing = models.FileField(upload_to='static/data/plan/cad/%Y/%m/%d', blank=True)
+    approved_by = models.CharField(choices=APPROVING,blank=True,max_length=100)
     updated_by = models.CharField(max_length=100,blank=True)
     excel = models.FileField(upload_to='static/data/plan/excel', blank=True)
     created_at = models.DateField(default=datetime.date.today, blank=True)
@@ -153,7 +163,7 @@ def pusblish_plan_boundary(sender, instance, created, **kwargs):
     file_name = os.path.basename(file).split('.')[0]
     file_path = os.path.dirname(file)
     name = instance.database.lower()
-    conn_str = 'postgresql://postgres:kali339456@localhost:5432/inventory'
+    conn_str = 'postgresql://root:323395kt@192.168.20.87:5432/web_pi'
 
     # extract zipfile
     with zipfile.ZipFile(file, 'r') as zip_ref:
@@ -189,7 +199,7 @@ def pusblish_plan_precient(sender, instance, created, **kwargs):
     file_name = os.path.basename(file).split('.')[0]
     file_path = os.path.dirname(file)
     name = instance.database.lower() + "_" + "precient"
-    conn_str = 'postgresql://postgres:kali339456@localhost:5432/inventory'
+    conn_str = 'postgresql://root:323395kt@192.168.20.87:5432/web_pi'
 
     # extract zipfile
     with zipfile.ZipFile(file, 'r') as zip_ref:
