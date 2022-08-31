@@ -20,7 +20,7 @@ from geoalchemy2 import *
 
 class dzongkhag(models.Model):
     name = models.CharField(max_length=100)
-    file = models.FileField(upload_to='static/data/boundary/%Y/%m/%d')
+    file = models.FileField(upload_to='static/data/dzongkhag/%Y/%m/%d')
     created_at = models.DateField(default=datetime.date.today, blank=True)
 
     def __str__(self):
@@ -130,7 +130,7 @@ class data(models.Model):
     database = models.CharField(max_length=200,blank=True)
     boundary = models.FileField(upload_to='static/data/plan/boundary/%Y/%m/%d', blank=True)
     precient = models.FileField(upload_to='static/data/plan/precient/%Y/%m/%d', blank=True)
-    # plot = models.FileField(upload_to='static/data/plan/plot/%Y/%m/%d', blank=True)
+    updated_by = models.CharField(max_length=100,blank=True)
     excel = models.FileField(upload_to='static/data/plan/excel', blank=True)
     created_at = models.DateField(default=datetime.date.today, blank=True)
 
