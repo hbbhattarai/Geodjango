@@ -83,6 +83,10 @@ $.getJSON(`http://127.0.0.1:8000/precient`, function (data) {
                     <strong> Small Plot Notes: </strong>   ${feature.properties.notes}
                     
                     <br />
+                    <strong> DCR: </strong>  <br />
+                    
+                    ${feature.properties.dcr}
+                    <br />
                     ` )
                     .openOn(layer);
 
