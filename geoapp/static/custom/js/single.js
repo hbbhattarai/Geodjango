@@ -33,7 +33,7 @@ map.on('mousemove', function (e) {
     $('.coordinate').html(`Lat: ${e.latlng.lat} Lng: ${e.latlng.lng}`)
 });
 
-$.getJSON(`http://192.168.20.87:8000/boundary`, function (data) {
+$.getJSON(`http://127.0.0.1:8000/boundary`, function (data) {
     var boundray = L.geoJSON(data, {
         style: function (feature) {
             return {
@@ -51,7 +51,7 @@ $.getJSON(`http://192.168.20.87:8000/boundary`, function (data) {
 
 });
 
-$.getJSON(`http://192.168.20.87:8000/precient`, function (data) {
+$.getJSON(`http://127.0.0.1:8000/precient`, function (data) {
     var precient = L.geoJSON(data, {
         style: function (feature) {
             return {
@@ -137,7 +137,7 @@ $.getJSON(`http://192.168.20.87:8000/precient`, function (data) {
 
 });
 
-// $.getJSON(`http://192.168.20.87:8000/plot`, function (data) {
+// $.getJSON(`http://127.0.0.1:8000/plot`, function (data) {
 //     var plot = L.geoJSON(data, {
 //         style: function (feature) {
 //             return {

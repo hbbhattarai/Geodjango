@@ -16,7 +16,7 @@ var Hybrid = L.tileLayer('http://mt0.google.com/vt/lyrs=y&hl=en&x={x}&y={y}&z={z
 var selected = null;
 var selectedLayerName = null;
 
-$.getJSON("http://192.168.20.87:8000/dzongkhags", function (data) {
+$.getJSON("http://127.0.0.1:8000/dzongkhags", function (data) {
     var dzongkahgs = L.geoJSON(data, {
         style: function (feature) {
             return {
@@ -41,7 +41,7 @@ $.getJSON("http://192.168.20.87:8000/dzongkhags", function (data) {
             layer.on('click', function(e) {
                 var dzoId = feature.properties.dzoId
                 sessionStorage['dzongkhagId'] = dzoId
-                location.href = `http://192.168.20.87:8000/plans/${dzoId}`
+                location.href = `http://127.0.0.1:8000/plans/${dzoId}`
             });
         }
 
