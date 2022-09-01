@@ -1,3 +1,7 @@
+// Api
+
+var Api = 'http://127.0.0.1:8000'
+
 
 // map class initialize 
 var map = L.map('map').setView([27.5142, 90.4336], 9);
@@ -33,7 +37,7 @@ map.on('mousemove', function (e) {
     $('.coordinate').html(`Lat: ${e.latlng.lat} Lng: ${e.latlng.lng}`)
 });
 
-$.getJSON(`http://127.0.0.1:8000/boundary`, function (data) {
+$.getJSON(`${Api}/boundary`, function (data) {
     var boundray = L.geoJSON(data, {
         style: function (feature) {
             return {
@@ -51,7 +55,7 @@ $.getJSON(`http://127.0.0.1:8000/boundary`, function (data) {
 
 });
 
-$.getJSON(`http://127.0.0.1:8000/precient`, function (data) {
+$.getJSON(`${Api}/precient`, function (data) {
     var precient = L.geoJSON(data, {
         style: function (feature) {
             return {

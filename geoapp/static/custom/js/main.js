@@ -1,3 +1,7 @@
+// Api
+
+var Api = 'http://127.0.0.1:8000'
+
 
 // map class initialize 
 var map = L.map('map').setView([27.5142, 90.4336], 9);
@@ -16,7 +20,7 @@ var Hybrid = L.tileLayer('http://mt0.google.com/vt/lyrs=y&hl=en&x={x}&y={y}&z={z
 var selected = null;
 var selectedLayerName = null;
 
-$.getJSON("http://127.0.0.1:8000/dzongkhags", function (data) {
+$.getJSON(`${Api}/dzongkhags`, function (data) {
     var dzongkahgs = L.geoJSON(data, {
         style: function (feature) {
             return {
@@ -41,7 +45,7 @@ $.getJSON("http://127.0.0.1:8000/dzongkhags", function (data) {
             layer.on('click', function(e) {
                 var dzoId = feature.properties.dzoId
                 sessionStorage['dzongkhagId'] = dzoId
-                location.href = `http://127.0.0.1:8000/plans/${dzoId}`
+                location.href = `${Api}/plans/${dzoId}`
             });
         }
 
