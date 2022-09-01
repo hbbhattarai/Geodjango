@@ -87,6 +87,7 @@
             <thead>
                 <tr>
                     <th>Uploaded By</th>
+                    <th>Approved By</th>
                     <th>Name (Date)</th>
                     <th>Boundary</th>
                     <th>Precinct</th>
@@ -102,6 +103,7 @@
             <tbody>
                 <tr>
                     <td>{{i.updated_by}}</td>
+                    <td>{{i.approved_by}}</td>
                     <td>{{i.plan.name}} ({{i.created_at}} )</td>
                     <td><a href="{{i.boundary.url}}" download="{{i.boundary.url}}" class="btn btn-outline-primary"
                             target="_blank">Download</a></td>
