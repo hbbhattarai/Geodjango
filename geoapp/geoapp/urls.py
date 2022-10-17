@@ -170,6 +170,32 @@ def plot(request):
 
     return HttpResponse(response,content_type='json')
 
+def chiwogs(request):
+    """
+    Fetch chiwogs data from PostGIS in GeoJSON and return it in the response.
+    """
+
+    DB_CONNECT = settings.DATABASES["default"]
+
+    connection = psycopg2.connect(
+        database=DB_CONNECT["NAME"],
+        user=DB_CONNECT["USER"],
+        password=DB_CONNECT["PASSWORD"],
+        host=DB_CONNECT["HOST"],
+        port=DB_CONNECT["PORT"],
+    )
+
+    cursor = connection.cursor()
+
+    data_query = query(table="chiwogs")
+
+    cursor.execute(data_query)
+
+    result = cursor.fetchone()
+
+    response = json.dumps(result[0], indent=2)
+
+    return HttpResponse(response,content_type='json')
 
 def dzongkhag(request):
     """
@@ -239,6 +265,9 @@ urlpatterns = [
 
     # Dzongkhag Data Url
     path('dzongkhags',dzongkhag,name='dzongkhag_data'),
+
+    # Chiwogs Data Url
+    path('chiwogs',dzongkhag,name='dzongkhag_data'),
 
     # Dzongkhag Data Url
     path('dzongkhag/<int:dzoId>',dzongkhagById,name='dzongkhagId_data'),

@@ -15,8 +15,51 @@ from geoalchemy2 import *
 # Create your models here.
 
 
-# Modal to upload dzongkhags boundray shapefile
+# Modal to upload chiwog boundray shapefile
 
+class chiwog(models.Model):
+    name = models.CharField(max_length=100)
+    file = models.FileField(upload_to='static/data/chiwogs/%Y/%m/%d')
+    created_at = models.DateField(default=datetime.date.today,blank=True)
+    
+    def __str__(self):
+        return self.name
+    class Meta:
+        verbose_name_plural = "4. Chiwog Boundary"
+
+@receiver(post_save,sender=chiwog)
+def publish_chiwog_boundary(sender, instance, created, **kwargs):
+    file = instance.file.path
+    file_format = os.path.basename(file).split('.')[-1]
+    file_name = os.path.basename(file).split('.')[0]
+    file_path = os.path.dirname(file)
+    name = instance.name.lower()
+    conn_str = 'postgresql://root:323395kt@192.168.20.87:5432/web_pi'
+
+    with zipfile.ZipFile(file, 'r') as zip_ref:
+        zip_ref.extractall(file_path)
+
+   # Get shapefile
+    shp = glob.glob(r'{}/**/*.shp'.format(file_path),recursive=True)
+
+    try:
+        req_shp = shp[0]
+        gdf = gpd.read_file(req_shp)  # make geodataframe
+        engine = create_engine(conn_str)
+        gdf.to_postgis(
+            con=engine,
+            schema='public',
+            name=name,
+            if_exists="replace")
+
+        for s in shp:
+            os.remove(s)
+
+    except Exception as e:
+        for s in shp:
+            os.remove(s)
+        instance.delete()
+        print("There is problem during shp upload: ", e)
 
 class dzongkhag(models.Model):
     name = models.CharField(max_length=100)
