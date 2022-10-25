@@ -40,6 +40,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
     'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -53,7 +54,10 @@ INSTALLED_APPS = [
     'app'
 ]
 
+
+
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -61,6 +65,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+CORS_ALLOWED_ORIGINS=[
+    'http://localhost:8000'
 ]
 
 ROOT_URLCONF = 'geoapp.urls'
@@ -90,10 +98,10 @@ WSGI_APPLICATION = 'geoapp.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE':'django.contrib.gis.db.backends.postgis',
-        'NAME': 'web_pi',
-        'USER': 'root',
+        'NAME': 'web_pi_dev',
+        'USER': 'kwangyel',
         'PASSWORD':'323395kt',
-        'HOST':'192.168.20.87',
+        'HOST':'127.0.0.1',
         'PORT':'5432',
     }
 }

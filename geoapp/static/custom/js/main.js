@@ -7,21 +7,40 @@ var Api = 'http://127.0.0.1:8000'
 var map = L.map('map').setView([27.5142, 90.4336], 9);
 map.zoomControl.setPosition('topright');
 
+//functions for leaflet
+function highlight(layer) {
+    layer.setStyle({
+        weight: 2,
+        color: '#FF5733'
+    });
+    if (!L.Browser.ie && !L.Browser.opera) {
+        layer.bringToFront();
+    }
+}
+
+function dehighlight(layer) {
+    if (selected === null || selected._leaflet_id !== layer._leaflet_id) {
+        dzongkhags.resetStyle(layer);
+    }
+}
+
+function select(layer) {
+    if (selected !== null) {
+        var previous = selected;
+    }
+    map.fitBounds(layer.getBounds());
+    selected = layer;
+    if (previous) {
+        dehighlight(previous);
+    }
+}
+
 // adding osm tilelayer 
 var Carto = L.tileLayer('https://cartodb-basemaps-a.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png');
 
 var Imagery = L.tileLayer('http://mt0.google.com/vt/lyrs=s&hl=en&x={x}&y={y}&z={z}').addTo(map);
 var Hybrid = L.tileLayer('http://mt0.google.com/vt/lyrs=y&hl=en&x={x}&y={y}&z={z}');
-
-//Adding marker in the center of map
-
-
-
-var selected = null;
-var selectedLayerName = null;
-
-$.getJSON(`${Api}/dzongkhags`, function (data) {
-    var dzongkahgs = L.geoJSON(data, {
+var dzongkhags = L.geoJSON(null,{
         style: function (feature) {
             return {
                 color: "#E2DFD2",
@@ -49,35 +68,32 @@ $.getJSON(`${Api}/dzongkhags`, function (data) {
             });
         }
 
+    }).addTo(map);
+var chiwogs = L.geoJSON(null,{
+        style: function (feature) {
+            return {
+                color: "#E2DFD2",
+                fillOpacity:0,
+            };
+        },
+        onEachFeature(feature, layer) {
+            layer.bindTooltip(feature.properties.chiwog, { opacity: 0.7 ,direction: 'center' });
+        }
     });
-    function highlight(layer) {
-        layer.setStyle({
-            weight: 2,
-            color: '#FF5733'
-        });
-        if (!L.Browser.ie && !L.Browser.opera) {
-            layer.bringToFront();
-        }
-    }
 
-    function dehighlight(layer) {
-        if (selected === null || selected._leaflet_id !== layer._leaflet_id) {
-            dzongkahgs.resetStyle(layer);
-        }
-    }
+//Adding marker in the center of map
 
-    function select(layer) {
-        if (selected !== null) {
-            var previous = selected;
-        }
-        map.fitBounds(layer.getBounds());
-        selected = layer;
-        if (previous) {
-            dehighlight(previous);
-        }
-    }
 
-    dzongkahgs.addTo(map);
+
+var selected = null;
+var selectedLayerName = null;
+
+$.getJSON(`${Api}/chiwogs`, function (data) {
+    chiwogs.addData(data );
+});
+
+$.getJSON(`${Api}/dzongkhags`, function (data) {
+    dzongkhags.addData(data );
 });
 
 
@@ -99,7 +115,8 @@ var baseMaps = {
 }
 
 var overlayMaps = {
-    
+    'Dzongkhags':dzongkhags,
+    'Chiwogs':chiwogs,
 }
 
 L.control.layers(baseMaps, overlayMaps, { collapsed: false, position: 'topleft' }).addTo(map);
