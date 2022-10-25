@@ -1,6 +1,6 @@
 // Api
 
-var Api = 'http://127.0.0.1:8000'
+var Api = 'http://202.144.157.89:8080'
 
 
 // map class initialize 

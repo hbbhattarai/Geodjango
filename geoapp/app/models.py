@@ -11,6 +11,7 @@ import glob
 import zipfile
 from sqlalchemy import *
 from geoalchemy2 import *
+from urllib.parse import quote 
 
 # Create your models here.
 
@@ -36,7 +37,9 @@ def pusblish_boundary(sender, instance, created, **kwargs):
     file_name = os.path.basename(file).split('.')[0]
     file_path = os.path.dirname(file)
     name = instance.name.lower()
-    conn_str = 'postgresql://root:323395kt@192.168.20.87:5432/web_pi'
+    user = 'root'
+    password = '*Dhs@2022#'
+    conn_str = 'postgresql://root:%s@192.168.20.87:5432/web_pi' % quote(password)
 
     # extract zipfile
     with zipfile.ZipFile(file, 'r') as zip_ref:
@@ -48,7 +51,7 @@ def pusblish_boundary(sender, instance, created, **kwargs):
     try:
         req_shp = shp[0]
         gdf = gpd.read_file(req_shp)  # make geodataframe
-        engine = create_engine(conn_str)
+        engine = create_engine('postgresql://root:%s@192.168.20.87:5432/web_pi' % quote(password))
         gdf.to_postgis(
             con=engine,
             schema='public',
@@ -163,7 +166,9 @@ def pusblish_plan_boundary(sender, instance, created, **kwargs):
     file_name = os.path.basename(file).split('.')[0]
     file_path = os.path.dirname(file)
     name = instance.database.lower()
-    conn_str = 'postgresql://root:323395kt@192.168.20.87:5432/web_pi'
+    user = 'root'
+    password = '*Dhs@2022#'
+    conn_str = 'postgresql://root:%s@192.168.20.87:5432/web_pi' % quote(password)
 
     # extract zipfile
     with zipfile.ZipFile(file, 'r') as zip_ref:
@@ -175,7 +180,7 @@ def pusblish_plan_boundary(sender, instance, created, **kwargs):
     try:
         req_shp = shp[0]
         gdf = gpd.read_file(req_shp)  # make geodataframe
-        engine = create_engine(conn_str)
+        engine = create_engine('postgresql://root:%s@192.168.20.87:5432/web_pi' % quote(password))
         gdf.to_postgis(
             con=engine,
             schema='public',
@@ -199,7 +204,9 @@ def pusblish_plan_precient(sender, instance, created, **kwargs):
     file_name = os.path.basename(file).split('.')[0]
     file_path = os.path.dirname(file)
     name = instance.database.lower() + "_" + "precient"
-    conn_str = 'postgresql://root:323395kt@192.168.20.87:5432/web_pi'
+    user = 'root'
+    password = '*Dhs@2022#'
+    conn_str = 'postgresql://root:%s@192.168.20.87:5432/web_pi' % quote(password)
 
     # extract zipfile
     with zipfile.ZipFile(file, 'r') as zip_ref:
@@ -211,7 +218,7 @@ def pusblish_plan_precient(sender, instance, created, **kwargs):
     try:
         req_shp = shp[0]
         gdf = gpd.read_file(req_shp)  # make geodataframe
-        engine = create_engine(conn_str)
+        engine = create_engine('postgresql://root:%s@192.168.20.87:5432/web_pi' % quote(password))
         gdf.to_postgis(
             con=engine,
             schema='public',

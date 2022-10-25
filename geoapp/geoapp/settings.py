@@ -34,7 +34,7 @@ SECRET_KEY = 'django-insecure-o62oocwhi%*%ryn56$7i9+sc#d3cc1%al*4cv+49erq3^kqb&r
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.20.87','202.144.157.89']
 
 
 # Application definition
@@ -92,7 +92,7 @@ DATABASES = {
         'ENGINE':'django.contrib.gis.db.backends.postgis',
         'NAME': 'web_pi',
         'USER': 'root',
-        'PASSWORD':'323395kt',
+        'PASSWORD':'*Dhs@2022#',
         'HOST':'192.168.20.87',
         'PORT':'5432',
     }
@@ -134,7 +134,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT =  '/static/'
+STATIC_ROOT =  '../static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
